@@ -38,6 +38,21 @@ class AuthServiceProvider extends ServiceProvider
             }
         );
 
+        $gate->define('update-user',
+            function ($user) {
+                $roles = $user->roles();
+                foreach ($roles as $role){
+                    $permissions = $role->permissions();
+                    foreach($permissions as $permission){
+                        if ($permission == 'update-user'){
+                            return true;
+                        }
+                    }
+                }
+                return false;
+            }
+        );
+
 //        $gate->define('show-phpinfo',
 //            function ($user, $post) {
 //                return $user->id === $post->user_id;
