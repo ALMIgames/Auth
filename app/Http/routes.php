@@ -19,7 +19,8 @@ Route::get('/', function () {
 Route::get('/home',['as' => 'auth.home',function () {
     return view('home');
 }]);
-Route::get('/resource', function () {
+Route::group(['middleware' => 'auth'], function () {
+    Route::get('/resource', function () {
 //    $authenticated = false;
 //    Session::set('authenticated',false);
 //    //dd(Session::all());
@@ -33,12 +34,19 @@ Route::get('/resource', function () {
 //    } else {
 //        return redirect()->route('auth.login');
 //    }
-    if (Auth::check()){
-        return view ('resource');
-    } else {
-        return redirect()->route ('auth.login');
-    }
+
+//    if (Auth::check()){
+//        return view ('resource');
+//    } else {
+//        return redirect()->route ('auth.login');
+//    }
+
+//    Route::get('/patata', ['as' =>'patata',
+//        'middleware' => 'auth', 'PatataController@getPatata']);
+    return view('resource');
+    });
 });
+
 Route::get('/flushSession',
     ['as' => 'session.flush',
         function() {
