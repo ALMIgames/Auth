@@ -20,18 +20,23 @@ Route::get('/home',['as' => 'auth.home',function () {
     return view('home');
 }]);
 Route::get('/resource', function () {
-    $authenticated = false;
-    Session::set('authenticated',false);
-    //dd(Session::all());
-    if (Session::has('authenticated')) {
-        if (Session::get('authenticated') == true ) {
-            $authenticated = true;
-        }
-    }
-    if ($authenticated) {
-        return view('resource');
+//    $authenticated = false;
+//    Session::set('authenticated',false);
+//    //dd(Session::all());
+//    if (Session::has('authenticated')) {
+//        if (Session::get('authenticated') == true ) {
+//            $authenticated = true;
+//        }
+//    }
+//    if ($authenticated) {
+//        return view('resource');
+//    } else {
+//        return redirect()->route('auth.login');
+//    }
+    if (Auth::check()){
+        return view ('resource');
     } else {
-        return redirect()->route('auth.login');
+        return redirect()->route ('auth.login');
     }
 });
 Route::get('/flushSession',
